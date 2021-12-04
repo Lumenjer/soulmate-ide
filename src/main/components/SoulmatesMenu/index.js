@@ -9,7 +9,7 @@ import Soulmates from "~/containers/soulmates";
 import SoulmateMenuItem from "./SoulmateMenuItem";
 
 const canStream = (soulmate) => {
-  return parseInt(soulmate.config?.version) >= 8 && soulmate.type !== "usb";
+  return parseInt(soulmate.config?.version) >= 2 && soulmate.type !== "usb";
 };
 
 const SoulmatesMenu = ({

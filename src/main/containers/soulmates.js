@@ -122,13 +122,13 @@ const SoulmatesContainer = () => {
       return;
     }
 
-    const socket = new WebSocket(`ws://${soulmate.addresses[0]}:81`);
+    const socket = new WebSocket(`ws://${soulmate.addresses[0]}/stream?config`);
     socket.onopen = () => {
       socket.onmessage = (e) => {
         soulmate.config = JSON.parse(e.data);
         socket.close();
       };
-      socket.send(JSON.stringify({ whatup: true }));
+      // socket.send(JSON.stringify({ whatup: true }));
     };
 
     let newSoulmates = [...soulmates, soulmate];
@@ -137,8 +137,8 @@ const SoulmatesContainer = () => {
   };
 
   useEffect(() => {
-    ipcRenderer?.on("soulmate", addSoulmate);
-    return () => ipcRenderer?.removeListener("soulmate", addSoulmate);
+    ipcRenderer?.on("firelamp", addSoulmate);
+    return () => ipcRenderer?.removeListener("firelamp", addSoulmate);
   }, [soulmates]);
 
   useEffect(() => {

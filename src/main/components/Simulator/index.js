@@ -48,7 +48,7 @@ const Simulator = ({
   useEffect(() => {
     if (!selectedSoulmate) return;
     if (!selectedSoulmate.addresses) return;
-    ws.current = new WebSocket(`ws://${selectedSoulmate.addresses[0]}:81`);
+    ws.current = new WebSocket(`ws://${selectedSoulmate.addresses[0]}/stream`);
     return () => ws.current?.close();
   }, [selectedSoulmate]);
 
@@ -57,16 +57,13 @@ const Simulator = ({
   const throttleSend = _.throttle((pixels) => {
     if (!ws.current) return;
     if (ws.current.readyState !== WebSocket.OPEN) return;
-
-    let d = new Uint8Array(pixels.length * 4);
-
+    let d = new Uint8Array(pixels.length * 3);
     for (let i = 0; i < pixels.length; i += 1) {
-      const index = i * 4;
+      const index = i * 3;
       const pixel = pixels[i];
-      d[index] = i == 0 ? 1 : 0;
-      d[index + 1] = pixel.r;
-      d[index + 2] = pixel.g;
-      d[index + 3] = pixel.b;
+      d[index] = pixel.r;
+      d[index+1] = pixel.g;
+      d[index+2] = pixel.b;
     }
 
     try {

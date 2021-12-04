@@ -25,7 +25,7 @@ app.on("ready", () => {
   }
 
   autoUpdater.checkForUpdatesAndNotify();
-  app.setAsDefaultProtocolClient("soulmate");
+  app.setAsDefaultProtocolClient("firelamp");
 });
 
 let mainWindow;
@@ -81,9 +81,10 @@ function createWindow() {
 
   ipcMain.on("scan", () => {
     bonjour.find({ type: "http" }, (service) => {
-      if (service.host.toLowerCase().includes("soulmate")) {
-        mainWindow.webContents.send("soulmate", service);
-      }
+      // if (service.host.toLowerCase().includes("firelamp")) {
+        // console.log(service);
+        mainWindow.webContents.send("firelamp", service);
+      // }
     });
   });
 
